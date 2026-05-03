@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills - Satva Portfolio</title>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: #0f172a;
+        color: white;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+            radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.2), transparent 30%),
+            radial-gradient(circle at 85% 25%, rgba(99, 102, 241, 0.18), transparent 30%),
+            radial-gradient(circle at 50% 95%, rgba(14, 165, 233, 0.14), transparent 35%);
+        z-index: -1;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 60px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(12px);
+        background: rgba(15, 23, 42, 0.75);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logo {
+        font-size: 22px;
+        font-weight: bold;
+        background: linear-gradient(45deg, #38bdf8, #6366f1);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 35px;
+        list-style: none;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #e2e8f0;
+        position: relative;
+        padding: 5px 0;
+        transition: 0.3s;
+    }
+
+    .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        left: 0;
+        bottom: -6px;
+        background: #38bdf8;
+        transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #38bdf8;
+    }
+
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+
+    .profile-img {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #38bdf8;
+        cursor: pointer;
+    }
+
+    .menu-toggle {
+        display: none;
+        font-size: 26px;
+        cursor: pointer;
+    }
+
+    .hero {
+        text-align: center;
+        padding: 70px 20px 35px;
+        animation: fadeDown 1s ease;
+    }
+
+    .hero h1 {
+        font-size: 52px;
+        margin-bottom: 12px;
+    }
+
+    .hero span {
+        background: linear-gradient(45deg, #38bdf8, #6366f1);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .hero p {
+        color: #94a3b8;
+        font-size: 18px;
+        max-width: 760px;
+        margin: auto;
+        line-height: 1.6;
+    }
+
+    .skills-container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+
+    .skill-card {
+        background: rgba(30, 41, 59, 0.78);
+        border: 1px solid rgba(56, 189, 248, 0.22);
+        border-radius: 22px;
+        padding: 28px;
+        position: relative;
+        overflow: hidden;
+        transition: 0.35s ease;
+        animation: fadeUp 0.9s ease forwards;
+    }
+
+    .skill-card::before {
+        content: "";
+        position: absolute;
+        width: 130px;
+        height: 130px;
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.3), transparent 70%);
+        top: -35px;
+        right: -35px;
+    }
+
+    .skill-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        border-color: #38bdf8;
+        box-shadow: 0 0 30px rgba(56, 189, 248, 0.22);
+    }
+
+    .skill-icon {
+        width: 65px;
+        height: 65px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+        font-weight: bold;
+        background: linear-gradient(135deg, #38bdf8, #6366f1);
+        margin-bottom: 18px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .skill-card h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .skill-card p {
+        color: #cbd5e1;
+        line-height: 1.6;
+        position: relative;
+        z-index: 1;
+    }
+
+    .certificates {
+        width: 90%;
+        max-width: 1200px;
+        margin: 70px auto;
+    }
+
+    .certificates h2 {
+        font-size: 42px;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .certificates .sub-text {
+        text-align: center;
+        color: #94a3b8;
+        margin-bottom: 40px;
+    }
+
+    .certificate-section {
+        margin-bottom: 45px;
+        background: rgba(15, 23, 42, 0.65);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 24px;
+        padding: 25px;
+    }
+
+    .certificate-title {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 20px;
+    }
+
+    .small-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #38bdf8, #6366f1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    .certificate-title h3 {
+        font-size: 26px;
+    }
+
+    .certificate-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    .certificate-card {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 18px;
+        padding: 14px;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .certificate-card:hover {
+        transform: translateY(-8px);
+        border-color: #38bdf8;
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.18);
+    }
+
+    .certificate-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+    }
+
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+        color: white;
+        font-size: 40px;
+        cursor: pointer;
+    }
+
+    @keyframes fadeDown {
+        from {
+            opacity: 0;
+            transform: translateY(-25px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 1024px) {
+        nav {
+            padding: 15px 30px;
+        }
+
+        .skills-container,
+        .certificate-row {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        nav {
+            padding: 15px 20px;
+        }
+
+        .nav-links {
+            position: absolute;
+            top: 70px;
+            right: 0;
+            width: 100%;
+            flex-direction: column;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.95);
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.4s;
+        }
+
+        .nav-links li {
+            padding: 15px 0;
+        }
+
+        .nav-links.active {
+            max-height: 320px;
+        }
+
+        .menu-toggle {
+            display: block;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+        }
+
+        .skills-container,
+        .certificate-row {
+            grid-template-columns: 1fr;
+        }
+
+        .certificate-card img {
+            height: 180px;
+        }
+    }
+</style>
+
+<body>
+
+    <nav>
+        <div class="logo">Satva</div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="portfolio.html">Home</a></li>
+            <li><a href="project.html">Projects</a></li>
+            <li><a href="skill.html">Skills</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+
+        <img src="Pictures/Satva Chauhan.jpg" class="profile-img">
+
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <section class="hero">
+        <h1>Skills & <span>Certificates</span></h1>
+        <p>Here are the technologies I work with and the certificates I have earned while learning programming, web
+            design, and game development.</p>
+    </section>
+
+    <section class="skills-container">
+
+        <div class="skill-card">
+            <div class="skill-icon">H</div>
+            <h2>HTML</h2>
+            <p>I use HTML to build clean page structure, forms, navigation bars, sections, and layouts.</p>
+        </div>
+
+        <div class="skill-card">
+            <div class="skill-icon">CSS</div>
+            <h2>CSS</h2>
+            <p>I use CSS for responsive layouts, effects, animations, gradients, and modern UI designs.</p>
+        </div>
+
+        <div class="skill-card">
+            <div class="skill-icon">JS</div>
+            <h2>JavaScript</h2>
+            <p>I use JavaScript to create interactive menus, popups, sliders, buttons, and dynamic website features.</p>
+        </div>
+
+        <div class="skill-card">
+            <div class="skill-icon">C</div>
+            <h2>C Language</h2>
+            <p>I use C for logic building, arrays, structures, sorting, searching, and core programming concepts.</p>
+        </div>
+
+        <div class="skill-card">
+            <div class="skill-icon">C++</div>
+            <h2>C++</h2>
+            <p>I use C++ for object-oriented programming, classes, inheritance, constructors, and problem solving.</p>
+        </div>
+
+        <div class="skill-card">
+            <div class="skill-icon">UE</div>
+            <h2>Unreal Engine</h2>
+            <p>I use Unreal Engine to build game systems, UI, gameplay mechanics, and Blueprint-based / CPP-Based features.</p>
+        </div>
+
+    </section>
+
+    <section class="certificates">
+        <h2>My Certificates</h2>
+        <p class="sub-text">Certificates grouped by skill, so visitors can clearly see what I have learned.</p>
+
+        <div class="certificate-section">
+            <div class="certificate-title">
+                <div class="small-icon">H</div>
+                <h3>HTML</h3>
+            </div>
+
+            <div class="certificate-row">
+                <div class="certificate-card" onclick="openImage('Pictures/html.png')">
+                    <img src="Pictures/html.png" alt="HTML Certificate">
+                </div>
+            </div>
+        </div>
+
+        <div class="certificate-section">
+            <div class="certificate-title">
+                <div class="small-icon">CSS</div>
+                <h3>CSS</h3>
+            </div>
+
+            <div class="certificate-row">
+                <div class="certificate-card" onclick="openImage('Pictures/css.png')">
+                    <img src="Pictures/css.png" alt="CSS Certificate">
+                </div>
+            </div>
+        </div>
+
+        <div class="certificate-section">
+            <div class="certificate-title">
+                <div class="small-icon">JS</div>
+                <h3>JavaScript</h3>
+            </div>
+
+            <div class="certificate-row">
+                <div class="certificate-card" onclick="openImage('Pictures/javascript.png')">
+                    <img src="Pictures/javascript.png" alt="JavaScript Certificate">
+                </div>
+            </div>
+        </div>
+
+        <div class="certificate-section">
+            <div class="certificate-title">
+                <div class="small-icon">C</div>
+                <h3>C Language</h3>
+            </div>
+
+            <div class="certificate-row">
+                <div class="certificate-card" onclick="openImage('Pictures/c.png')">
+                    <img src="Pictures/c.png" alt="C Certificate">
+                </div>
+            </div>
+        </div>
+
+        <div class="certificate-section">
+            <div class="certificate-title">
+                <div class="small-icon">UE</div>
+                <h3>Unreal Engine</h3>
+            </div>
+
+            <div class="certificate-row">
+                <div class="certificate-card" onclick="openImage('Pictures/uec1.png')">
+                    <img src="Pictures/uec1.png" alt="Unreal Engine Certificate 1">
+                </div>
+
+                <div class="certificate-card" onclick="openImage('Pictures/uec2.png')">
+                    <img src="Pictures/uec2.png" alt="Unreal Engine Certificate 2">
+                </div>
+
+                <div class="certificate-card" onclick="openImage('Pictures/uec3.png')">
+                    <img src="Pictures/uec3.png" alt="Unreal Engine Certificate 3">
+                </div>
+
+                <div class="certificate-card" onclick="openImage('Pictures/uec4.png')">
+                    <img src="Pictures/uec4.png" alt="Unreal Engine Certificate 4">
+                </div>
+
+                <div class="certificate-card" onclick="openImage('Pictures/uec5.png')">
+                    <img src="Pictures/uec5.png" alt="Unreal Engine Certificate 5">
+                </div>
+
+                <div class="certificate-card" onclick="openImage('Pictures/uec6.png')">
+                    <img src="Pictures/uec6.png" alt="Unreal Engine Certificate 6">
+                </div>
+
+                <div class="certificate-card" onclick="openImage('Pictures/uec7.png')">
+                    <img src="Pictures/uec7.png" alt="Unreal Engine Certificate 7">
+                </div>
+            </div>
+        </div>
+
+        <div class="certificate-section">
+            <div class="certificate-title">
+                <div class="small-icon">O</div>
+                <h3>Other</h3>
+            </div>
+
+            <div class="certificate-row">
+                <div class="certificate-card" onclick="openImage('Pictures/oracle.png')">
+                    <img src="Pictures/oracle.png" alt="Oracle Certificate">
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeImage()">&times;</span>
+        <img class="modal-content" id="fullImage">
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("navLinks").classList.toggle("active");
+        }
+
+        function openImage(src) {
+            document.getElementById("imageModal").style.display = "flex";
+            document.getElementById("fullImage").src = src;
+        }
+
+        function closeImage() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            let modal = document.getElementById("imageModal");
+
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

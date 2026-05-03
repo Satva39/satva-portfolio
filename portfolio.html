@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satva Portfolio</title>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: #0f172a;
+        color: white;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.22), transparent 30%),
+            radial-gradient(circle at 80% 30%, rgba(99, 102, 241, 0.2), transparent 30%),
+            radial-gradient(circle at 50% 90%, rgba(14, 165, 233, 0.15), transparent 35%);
+        z-index: -1;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 60px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(14px);
+        background: rgba(15, 23, 42, 0.72);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: 800;
+        background: linear-gradient(45deg, #38bdf8, #6366f1);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 35px;
+        list-style: none;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #e2e8f0;
+        position: relative;
+        padding: 5px 0;
+        transition: 0.3s;
+    }
+
+    .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        left: 0;
+        bottom: -6px;
+        background: #38bdf8;
+        transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #38bdf8;
+    }
+
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+
+    .profile-img {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #38bdf8;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .profile-img:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+    }
+
+    .menu-toggle {
+        display: none;
+        font-size: 26px;
+        cursor: pointer;
+    }
+
+    .hero {
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 70px 80px;
+        gap: 50px;
+    }
+
+    .hero-text {
+        max-width: 620px;
+        animation: slideLeft 1s ease;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 1px solid rgba(56, 189, 248, 0.4);
+        border-radius: 30px;
+        color: #38bdf8;
+        background: rgba(56, 189, 248, 0.08);
+        margin-bottom: 18px;
+        font-size: 14px;
+    }
+
+    .hero-text h1 {
+        font-size: 58px;
+        line-height: 1.1;
+        margin-bottom: 18px;
+    }
+
+    .hero-text h1 span {
+        background: linear-gradient(45deg, #38bdf8, #6366f1);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .hero-text p {
+        color: #94a3b8;
+        font-size: 18px;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-bottom: 25px;
+    }
+
+    .btn {
+        padding: 12px 24px;
+        border-radius: 30px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 600;
+    }
+
+    .btn-primary {
+        background: linear-gradient(45deg, #38bdf8, #6366f1);
+        color: white;
+    }
+
+    .btn-secondary {
+        background: transparent;
+        border: 1px solid #38bdf8;
+        color: #38bdf8;
+    }
+
+    .btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+    }
+
+    .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .skill-tags span {
+        padding: 8px 14px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #cbd5e1;
+        font-size: 14px;
+    }
+
+    .hero-img {
+        position: relative;
+        animation: slideRight 1s ease;
+    }
+
+    .hero-img::before {
+        content: "";
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.35), transparent 70%);
+        filter: blur(40px);
+        z-index: -1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .hero-img img {
+        width: 320px;
+        max-width: 100%;
+        border-radius: 26px;
+        border: 2px solid rgba(56, 189, 248, 0.7);
+        box-shadow: 0 0 35px rgba(56, 189, 248, 0.25);
+        animation: float 4s ease-in-out infinite;
+        transition: 0.3s;
+    }
+
+    .hero-img img:hover {
+        transform: scale(1.06);
+        border-color: #6366f1;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-content {
+        display: block;
+        margin: auto;
+        max-width: 90%;
+        max-height: 90%;
+        margin-top: 5%;
+        border-radius: 10px;
+    }
+
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+        color: white;
+        font-size: 40px;
+        cursor: pointer;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-15px);
+        }
+    }
+
+    @keyframes slideLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideRight {
+        from {
+            opacity: 0;
+            transform: translateX(40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @media (max-width: 1024px) {
+        nav {
+            padding: 15px 30px;
+        }
+
+        .hero {
+            padding: 50px 40px;
+        }
+
+        .hero-text h1 {
+            font-size: 44px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        nav {
+            padding: 15px 20px;
+        }
+
+        .nav-links {
+            position: absolute;
+            top: 70px;
+            right: 0;
+            width: 100%;
+            flex-direction: column;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.96);
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.4s;
+        }
+
+        .nav-links li {
+            padding: 15px 0;
+        }
+
+        .nav-links.active {
+            max-height: 320px;
+        }
+
+        .menu-toggle {
+            display: block;
+        }
+
+        .hero {
+            flex-direction: column;
+            text-align: center;
+            padding: 45px 22px;
+        }
+
+        .hero-text h1 {
+            font-size: 36px;
+        }
+
+        .hero-buttons,
+        .skill-tags {
+            justify-content: center;
+        }
+
+        .hero-img img {
+            width: 240px;
+        }
+    }
+</style>
+
+<body>
+
+    <nav>
+        <div class="logo">Satva</div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="portfolio.html">Home</a></li>
+            <li><a href="project.html">Projects</a></li>
+            <li><a href="skill.html">Skills</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+
+        <img src="Pictures/Satva Chauhan.jpg" class="profile-img" onclick="openImage(this.src)">
+
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-text">
+            <div class="tag">Programmer • Game Developer • Web Designer</div>
+
+            <h1>Hi, I'm <span>Satva Chauhan</span></h1>
+
+            <p>
+                I create clean websites, interactive UI, and Unreal Engine gameplay systems.
+                I enjoy building real projects, solving programming problems, and designing modern digital experiences.
+            </p>
+
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="window.location.href='project.html'">View Projects</button>
+                <button class="btn btn-secondary" onclick="window.location.href='skill.html'">View Skills</button>
+            </div>
+            
+        </div>
+
+        <div class="hero-img">
+            <img src="Pictures/Untitled (350 x 400 px).svg" alt="Developer Illustration">
+        </div>
+    </section>
+
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeImage()">&times;</span>
+        <img class="modal-content" id="fullImage">
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("navLinks").classList.toggle("active");
+        }
+
+        function openImage(src) {
+            document.getElementById("imageModal").style.display = "block";
+            document.getElementById("fullImage").src = src;
+        }
+
+        function closeImage() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            let modal = document.getElementById("imageModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

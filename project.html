@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Satva</title>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+        background: #0f172a;
+        color: white;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.25), transparent 30%),
+            radial-gradient(circle at 80% 30%, rgba(99, 102, 241, 0.2), transparent 30%),
+            radial-gradient(circle at 50% 90%, rgba(14, 165, 233, 0.15), transparent 40%);
+        z-index: -1;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 60px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(14px);
+        background: rgba(15, 23, 42, 0.75);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        background: linear-gradient(45deg, #38bdf8, #6366f1);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 35px;
+        list-style: none;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #e2e8f0;
+        position: relative;
+        padding: 5px 0;
+        transition: 0.3s;
+    }
+
+    .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        left: 0;
+        bottom: -6px;
+        background: #38bdf8;
+        transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #38bdf8;
+    }
+
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+
+    .profile-img {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #38bdf8;
+        cursor: pointer;
+    }
+
+    .menu-toggle {
+        display: none;
+        font-size: 26px;
+        cursor: pointer;
+    }
+
+    .page-title {
+        text-align: center;
+        margin: 35px 20px 10px;
+        font-size: 42px;
+        background: linear-gradient(45deg, #38bdf8, #6366f1);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #94a3b8;
+        margin-bottom: 25px;
+    }
+
+    .projects {
+        padding: 40px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+    }
+
+    .project-card {
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(12px);
+        border-radius: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: 0.4s ease;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        position: relative;
+    }
+
+    .project-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: 0.5s;
+        z-index: 1;
+    }
+
+    .project-card:hover::before {
+        left: 100%;
+    }
+
+    .project-card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 12px 35px rgba(56, 189, 248, 0.35);
+        border-color: rgba(56, 189, 248, 0.5);
+    }
+
+    .project-card img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        transition: 0.3s;
+    }
+
+    .project-card:hover img {
+        transform: scale(1.06);
+    }
+
+    .project-card h3 {
+        padding: 14px;
+        font-size: 15px;
+        text-align: center;
+        color: #e2e8f0;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.88);
+        backdrop-filter: blur(8px);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        width: 82%;
+        max-width: 850px;
+        text-align: center;
+        animation: zoomIn 0.3s ease;
+    }
+
+    .modal-content img {
+        width: 100%;
+        max-height: 460px;
+        object-fit: contain;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        font-size: 42px;
+        cursor: pointer;
+        color: white;
+    }
+
+    .gallery-btn {
+        margin: 15px;
+        padding: 10px 18px;
+        font-size: 22px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+        cursor: pointer;
+        color: #fff;
+        transition: 0.3s;
+    }
+
+    .gallery-btn:hover {
+        background: #38bdf8;
+        color: #0f172a;
+    }
+
+    @keyframes zoomIn {
+        from {
+            transform: scale(0.85);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        nav {
+            padding: 15px 30px;
+        }
+
+        .projects {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        nav {
+            padding: 15px 20px;
+        }
+
+        .nav-links {
+            position: absolute;
+            top: 70px;
+            right: 0;
+            width: 100%;
+            flex-direction: column;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.95);
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.4s;
+        }
+
+        .nav-links li {
+            padding: 15px 0;
+        }
+
+        .nav-links.active {
+            max-height: 300px;
+        }
+
+        .menu-toggle {
+            display: block;
+        }
+
+        .projects {
+            grid-template-columns: 1fr;
+            padding: 25px;
+        }
+
+        .page-title {
+            font-size: 32px;
+        }
+
+        .modal-content {
+            width: 95%;
+        }
+    }
+</style>
+
+<body>
+
+    <nav>
+        <div class="logo">Satva</div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="portfolio.html">Home</a></li>
+            <li><a href="project.html">Projects</a></li>
+            <li><a href="skill.html">Skills</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+
+        <img src="Pictures/Satva Chauhan.jpg" class="profile-img" onclick="openImage(this.src)">
+
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <h1 class="page-title">My Projects</h1>
+    <p class="subtitle">A collection of my UI, web, branding, and game development projects.</p>
+
+    <div class="projects">
+
+        <div class="project-card" onclick="openProject(0)">
+            <img src="Pictures/Untitled design.svg">
+            <h3>HCL | GUVI</h3>
+        </div>
+
+        <div class="project-card" onclick="openProject(1)">
+            <img src="Pictures/Untitled design (1).svg">
+            <h3>Book My Show</h3>
+        </div>
+
+        <div class="project-card" onclick="openProject(2)">
+            <img src="Pictures/Untitled design (2).svg">
+            <h3>Cafē Coffee Day</h3>
+        </div>
+
+        <div class="project-card" onclick="openProject(3)">
+            <img src="Pictures/Untitled design (3).svg">
+            <h3>Royal Technosoft P. Ltd</h3>
+        </div>
+
+        <div class="project-card" onclick="openProject(4)">
+            <img src="Pictures/Untitled design (4).svg">
+            <h3>IPL Interface</h3>
+        </div>
+
+        <div class="project-card" onclick="openProject(5)">
+            <img src="Pictures/Untitled (1240 x 720 px) (1240 x 670 px) (1173 x 670 px).svg">
+            <h3>Action Adventure Game</h3>
+        </div>
+
+        <div class="project-card" onclick="openProject(6)">
+            <img src="p7.jpg">
+            <h3>The Last Survive</h3>
+        </div>
+
+        <div class="project-card" onclick="openProject(7)">
+            <img src="p8.jpg">
+            <h3>The Last Survive</h3>
+        </div>
+
+    </div>
+
+    <div id="projectModal" class="modal" onclick="outsideClick(event)">
+        <span class="close" onclick="closeProject()">&times;</span>
+
+        <div class="modal-content">
+            <img id="galleryImage">
+            <br>
+            <button class="gallery-btn" onclick="prevImage()">&lt;</button>
+            <button class="gallery-btn" onclick="nextImage()">&gt;</button>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeImage()">&times;</span>
+        <div class="modal-content">
+            <img id="fullImage">
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("navLinks").classList.toggle("active");
+        }
+
+        let projects = [
+            ["Pictures/guvi1.png", "Pictures/guvi2.png", "Pictures/guvi3.png", "Pictures/guvi4.png", "Pictures/guvi5.png"],
+            ["Pictures/bms1.png", "Pictures/bms2.png", "Pictures/bms3.png", "Pictures/bms4.png"],
+            ["Pictures/ccd1.png", "Pictures/ccd2.png", "Pictures/ccd3.png"],
+            ["Pictures/royal1.png", "Pictures/royal2.png", "Pictures/royal3.png", "Pictures/royal4.png"],
+            ["Pictures/ipl1.png", "Pictures/ipl2.png", "Pictures/ipl3.png", "Pictures/ipl4.png"],
+            ["p6-1.jpg", "p6-2.jpg"],
+            ["p7-1.jpg", "p7-2.jpg"],
+            ["p7-1.jpg", "p7-2.jpg"]
+        ];
+
+        let currentProject = 0;
+        let currentImage = 0;
+
+        function openProject(index) {
+            currentProject = index;
+            currentImage = 0;
+            document.getElementById("projectModal").style.display = "flex";
+            showImage();
+        }
+
+        function showImage() {
+            document.getElementById("galleryImage").src = projects[currentProject][currentImage];
+        }
+
+        function nextImage() {
+            currentImage = (currentImage + 1) % projects[currentProject].length;
+            showImage();
+        }
+
+        function prevImage() {
+            currentImage = (currentImage - 1 + projects[currentProject].length) % projects[currentProject].length;
+            showImage();
+        }
+
+        function closeProject() {
+            document.getElementById("projectModal").style.display = "none";
+        }
+
+        function outsideClick(e) {
+            if (e.target.id === "projectModal") {
+                closeProject();
+            }
+        }
+
+        window.onclick = function (event) {
+            let imageModal = document.getElementById("imageModal");
+
+            if (event.target == imageModal) {
+                imageModal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

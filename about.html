@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Satva Portfolio</title>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: #0f172a;
+        color: white;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.22), transparent 30%),
+            radial-gradient(circle at 80% 30%, rgba(99, 102, 241, 0.2), transparent 30%),
+            radial-gradient(circle at 50% 90%, rgba(14, 165, 233, 0.15), transparent 35%);
+        z-index: -1;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 60px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(14px);
+        background: rgba(15, 23, 42, 0.72);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: 800;
+        background: linear-gradient(45deg, #38bdf8, #6366f1);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 35px;
+        list-style: none;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #e2e8f0;
+        position: relative;
+        padding: 5px 0;
+        transition: 0.3s;
+    }
+
+    .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        left: 0;
+        bottom: -6px;
+        background: #38bdf8;
+        transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #38bdf8;
+    }
+
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+
+    .profile-img {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #38bdf8;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .menu-toggle {
+        display: none;
+        font-size: 26px;
+        cursor: pointer;
+    }
+
+    /* ABOUT PAGE */
+    .about-section {
+        padding: 70px 80px;
+    }
+
+    .about-main {
+        display: grid;
+        grid-template-columns: 1.4fr 0.8fr;
+        gap: 45px;
+        align-items: center;
+        margin-bottom: 70px;
+    }
+
+    .about-text {
+        animation: slideLeft 1s ease;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 1px solid rgba(56, 189, 248, 0.4);
+        border-radius: 30px;
+        color: #38bdf8;
+        background: rgba(56, 189, 248, 0.08);
+        margin-bottom: 18px;
+        font-size: 14px;
+    }
+
+    .about-text h1 {
+        font-size: 56px;
+        line-height: 1.1;
+        margin-bottom: 20px;
+    }
+
+    .about-text h1 span {
+        background: linear-gradient(45deg, #38bdf8, #6366f1);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .about-text p {
+        color: #94a3b8;
+        font-size: 18px;
+        line-height: 1.8;
+        margin-bottom: 18px;
+    }
+
+    .about-buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    }
+
+    .btn {
+        padding: 12px 24px;
+        border-radius: 30px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background: linear-gradient(45deg, #38bdf8, #6366f1);
+        color: white;
+    }
+
+    .btn-secondary {
+        background: transparent;
+        border: 1px solid #38bdf8;
+        color: #38bdf8;
+    }
+
+    .btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+    }
+
+    .about-photo {
+        display: flex;
+        justify-content: center;
+        animation: slideRight 1s ease;
+    }
+
+    .about-photo img {
+        width: 300px;
+        height: 360px;
+        object-fit: cover;
+        border-radius: 28px;
+        border: 2px solid rgba(56, 189, 248, 0.7);
+        box-shadow: 0 0 35px rgba(56, 189, 248, 0.25);
+        animation: float 4s ease-in-out infinite;
+        cursor: pointer;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 38px;
+        margin-bottom: 30px;
+    }
+
+    .section-title span {
+        background: linear-gradient(45deg, #38bdf8, #6366f1);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .skills-list {
+        max-width: 900px;
+        margin: 0 auto 70px;
+        display: grid;
+        gap: 15px;
+    }
+
+    .skill-line {
+        padding: 18px 22px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #cbd5e1;
+        transition: 0.3s;
+        animation: fadeUp 0.8s ease forwards;
+    }
+
+    .skill-line:hover {
+        transform: translateX(10px);
+        border-color: #38bdf8;
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.18);
+    }
+
+    .skill-line strong {
+        color: #38bdf8;
+    }
+
+    .timeline {
+        max-width: 950px;
+        margin: auto;
+        position: relative;
+    }
+
+    .timeline::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 3px;
+        height: 100%;
+        background: linear-gradient(#38bdf8, #6366f1);
+        transform: translateX(-50%);
+        border-radius: 10px;
+    }
+
+    .timeline-item {
+        width: 50%;
+        padding: 20px;
+        position: relative;
+        animation: fadeUp 0.8s ease;
+    }
+
+    .timeline-item:nth-child(odd) {
+        left: 0;
+        text-align: right;
+    }
+
+    .timeline-item:nth-child(even) {
+        left: 50%;
+    }
+
+    .timeline-card {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 20px;
+        padding: 22px;
+        transition: 0.3s;
+    }
+
+    .timeline-card:hover {
+        transform: translateY(-8px);
+        border-color: #38bdf8;
+        box-shadow: 0 0 24px rgba(56, 189, 248, 0.2);
+    }
+
+    .timeline-card h3 {
+        color: #38bdf8;
+        margin-bottom: 8px;
+    }
+
+    .timeline-card p {
+        color: #cbd5e1;
+        line-height: 1.7;
+    }
+
+    .timeline-dot {
+        width: 18px;
+        height: 18px;
+        background: #38bdf8;
+        border-radius: 50%;
+        position: absolute;
+        top: 35px;
+        box-shadow: 0 0 20px #38bdf8;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-dot {
+        right: -9px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-dot {
+        left: -9px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 12px;
+    }
+
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+        color: white;
+        font-size: 40px;
+        cursor: pointer;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-15px);
+        }
+    }
+
+    @keyframes slideLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideRight {
+        from {
+            opacity: 0;
+            transform: translateX(40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 1024px) {
+        nav {
+            padding: 15px 30px;
+        }
+
+        .about-section {
+            padding: 50px 40px;
+        }
+
+        .about-text h1 {
+            font-size: 44px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        nav {
+            padding: 15px 20px;
+        }
+
+        .nav-links {
+            position: absolute;
+            top: 70px;
+            right: 0;
+            width: 100%;
+            flex-direction: column;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.96);
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.4s;
+        }
+
+        .nav-links li {
+            padding: 15px 0;
+        }
+
+        .nav-links.active {
+            max-height: 320px;
+        }
+
+        .menu-toggle {
+            display: block;
+        }
+
+        .about-main {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .about-section {
+            padding: 45px 22px;
+        }
+
+        .about-text h1 {
+            font-size: 36px;
+        }
+
+        .about-buttons {
+            justify-content: center;
+        }
+
+        .about-photo img {
+            width: 230px;
+            height: 280px;
+        }
+
+        .timeline::before {
+            left: 10px;
+        }
+
+        .timeline-item {
+            width: 100%;
+            left: 0 !important;
+            text-align: left !important;
+            padding-left: 35px;
+        }
+
+        .timeline-dot {
+            left: 1px !important;
+            right: auto !important;
+        }
+    }
+</style>
+
+<body>
+
+    <nav>
+        <div class="logo">Satva</div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="portfolio.html">Home</a></li>
+            <li><a href="project.html">Projects</a></li>
+            <li><a href="skill.html">Skills</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+
+        <img src="Pictures/Satva Chauhan.jpg" class="profile-img">
+
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <section class="about-section">
+
+        <div class="about-main">
+            <div class="about-text">
+                <div class="tag">sGame Dev • Programmer • Web Designer</div>
+
+                <h1>Hi, I'm <span>Satva Chauhan</span></h1>
+
+                <p>
+                    I am a programmer and Unreal Engine developer who loves building games, websites,
+                    and interactive systems. My journey started very early with game development,
+                    and now I keep improving by creating real projects.
+                </p>
+
+                <p>
+                    I enjoy working with logic, UI design, gameplay systems, and modern web pages.
+                    My current focus is C++, Unreal Engine, and many more.
+                </p>
+
+                <div class="about-buttons">
+                    <a class="btn btn-primary" href="project.html">View Projects</a>
+                    <a class="btn btn-secondary" href="https://www.linkedin.com/in/satva-chauhan-a30a17366/"
+                        target="_blank">LinkedIn</a>
+                </div>
+            </div>
+
+            <div class="about-photo">
+                <img src="Pictures/Satva Chauhan.jpg" alt="Satva Chauhan" onclick="openImage(this.src)">
+            </div>
+        </div>
+
+        <h2 class="section-title">My <span>Skills</span></h2>
+
+        <div class="skills-list">
+            <div class="skill-line"><strong>HTML:</strong> Page structure, forms, navigation bars, and clean layouts.
+            </div>
+            <div class="skill-line"><strong>CSS:</strong> Responsive design, animations, gradients, hover effects, and
+                UI styling.</div>
+            <div class="skill-line"><strong>JavaScript:</strong> Popups, sliders, dynamic buttons, menus, and user
+                interactions.</div>
+            <div class="skill-line"><strong>C Language:</strong> Logic building, arrays, structures, sorting, searching,
+                and fundamentals.</div>
+            <div class="skill-line"><strong>C++:</strong> Object-oriented programming, classes, inheritance,
+                constructors, and game logic.</div>
+            <div class="skill-line"><strong>Unreal Engine 5:</strong> Gameplay systems, Blueprint logic, UI, and
+                game development.</div>
+        </div>
+
+        <h2 class="section-title">My <span>Journey</span></h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <h3>Std 6 — Started Unreal Engine 5</h3>
+                    <p>I started developing games in Unreal Engine 5 and made my first game: <b>Action Adventure
+                            Game</b>.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <h3>After Std 6 — More Game Projects</h3>
+                    <p>I created several games like <b>Zombie Shooter</b> and a <b>Multiplayer Shooter Game</b>.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <h3>Std 9 — Royal Technosoft P. Ltd</h3>
+                    <p>I joined Royal Technosoft P. Ltd and learned <b>HTML, CSS, and C</b>.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <h3>Std 10 — JavaScript</h3>
+                    <p>I learned JavaScript and started adding interactivity to my websites.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <h3>Now — C++ & The Last Survive</h3>
+                    <p>I am still learning C++ and developing my survival game named <b>The Last Survive</b>.</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeImage()">&times;</span>
+        <img class="modal-content" id="fullImage">
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("navLinks").classList.toggle("active");
+        }
+
+        function openImage(src) {
+            document.getElementById("imageModal").style.display = "flex";
+            document.getElementById("fullImage").src = src;
+        }
+
+        function closeImage() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            let modal = document.getElementById("imageModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
